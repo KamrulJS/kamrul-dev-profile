@@ -6,7 +6,7 @@ function About() {
 	return (
 		<div className="section aximo-section-padding">
 			<div id="aximo-counter"></div>
-			<div className="container">
+			<div className="container reveal reveal--left">
 				<div className="aximo-section-title">
 					<div className="row">
 						<div className="col-lg-7">

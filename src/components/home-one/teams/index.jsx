@@ -17,7 +17,7 @@ function Teams({ teams }) {
 						</span>
 					</h2>
 				</div>
-				<div className="row">
+				<div className="row reveal reveal--right">
 					{teams.map((team, index) => (
 						<FadeInStagger key={team.id} index={index} className="col-xl-3 col-md-6">
 							<TeamCard team={team} />

@@ -12,6 +12,8 @@ import Team1Img from "../../assets/images/team/team1.png";
 import Team2Img from "../../assets/images/team/team2.png";
 import Team3Img from "../../assets/images/team/team3.png";
 import Team4Img from "../../assets/images/team/team4.png";
+import Tabs from "../Tabs";
+
 
 const servicesData = [
 	{
@@ -75,6 +77,7 @@ function HomeOne() {
 	return (
 		<>
 			<Hero />
+			<Tabs />
 			<Services services={servicesData} />
 			<About />
 			<Projects />
@@ -82,6 +85,8 @@ function HomeOne() {
 			<Testimonial />
 			<AutoSlider />
 			<Teams teams={teamsData} />
+		
+
 		</>
 	);
 }

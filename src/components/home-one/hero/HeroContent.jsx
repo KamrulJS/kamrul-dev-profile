@@ -5,6 +5,8 @@ import User1Img from "../../../assets/images/v1/user1.png";
 import User2Img from "../../../assets/images/v1/user2.png";
 import User3Img from "../../../assets/images/v1/user3.png";
 import { FadeInStaggerTwo, FadeInStaggerTwoChildren } from "../../animation/FadeInStaggerTwo";
+
+
 function HeroContent() {
 	return (
 		<div className="aximo-hero-content">

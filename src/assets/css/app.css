@@ -389,13 +389,12 @@ h6,
 .h6 {
 	font-family: "Syne", sans-serif;
 	color: var(--heading-color);
-	font-weight: 700;
 	margin: 0;
 }
 
 h1,
 .h1 {
-	font-size: 104px;
+	font-size: 104px !important;
 	letter-spacing: -1px;
 	line-height: 1em;
 }
@@ -414,7 +413,7 @@ h1,
 
 h2,
 .h2 {
-	font-size: 70px;
+	font-size: 70px !important;
 	line-height: 1.07em; /* 116.667% */
 	letter-spacing: -0.7px;
 }
@@ -435,7 +434,7 @@ h2,
 
 h3,
 .h3 {
-	font-size: 30px;
+	font-size: 30px !important;
 	line-height: 1.4em;
 }
 @media (max-width: 767px) {
@@ -447,13 +446,13 @@ h3,
 
 h4,
 .h4 {
-	font-size: 24px;
+	font-size: 24px !important;
 	line-height: 28px;
 }
 
 h5,
 .h5 {
-	font-size: 24px;
+	font-size: 24px !important;
 	line-height: 1.41;
 	letter-spacing: -0.48px;
 }
@@ -468,11 +467,11 @@ h5,
 
 h6,
 .h6 {
-	font-size: 20px;
+	font-size: 20px !important;
 }
 
 p {
-	font-size: 18px;
+	font-size: 18px !important;
 	margin-bottom: 30px;
 }
 @media (max-width: 767px) {
