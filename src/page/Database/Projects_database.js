@@ -1,10 +1,17 @@
+import Custom from "../../assets/images/service/service-single.png"
+
+
+
+
+
+
 const servicesData = [
   {
     serviceName: "Custom Web Development",
     projects: [
       {
         id: "cw1",
-        img: "/images/projects/custom-web/project-01.jpg",
+        img: Custom,
         title: "Innovative SaaS Platform",
         company: "Tech Solutions Inc.",
         description:
@@ -284,7 +291,7 @@ const servicesData = [
     projects: [
       {
         id: "ec1",
-        img: "/images/projects/ecommerce/project-01.jpg",
+        img: "gsdfgsdfgsd",
         title: "Fashion Apparel Store",
         company: "ChicThreads Boutique",
         description:

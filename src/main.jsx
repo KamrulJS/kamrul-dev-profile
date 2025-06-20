@@ -27,7 +27,7 @@ import "swiper/css/scrollbar";
 import "./assets/css/app.css";
 import "./assets/css/main.css";
 import "./assets/css/mobile-nav.css";
-// import "./index.css";
+import "./index.css";
 
 // React Router Dom
 import { RouterProvider } from "react-router-dom";
