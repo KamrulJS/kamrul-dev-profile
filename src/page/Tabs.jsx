@@ -2,6 +2,7 @@ import React from 'react';
 import { Segmented, Tabs } from 'antd';
 import { use } from 'react';
 import servicesData from './Database/Projects_database';
+import { Link } from 'react-router-dom';
 
 
 
@@ -17,35 +18,38 @@ const onChange = key => {
 // ];
 
 
+
+
+
  const ServiceItems = servicesData.map((service, idx) => ({
 
     key: String(idx + 1),
     label: service.serviceName || `Service ${idx + 1}`,
     children: (
-      console.log(service),
       <div className=' p-6'>
         {/* <h2 className=" mb-4">{service.serviceName}</h2> */}
-        <div className='grid grid-cols-4 gap-5 rounded-xl'>
+        <div className='grid grid-cols-4 gap-4 rounded-xl'>
           
         {service.projects.map((project, index) => (
           
-          <div key={index} className='bg-[#BFF747] p-4 flex flex-col justify-between items-start rounded-xl gap-4'>
-            {/* {project.img} */}
-            <div>
-              <img height={300} src={project.img} alt="asfcasfas" />
-              <h3>{project.title}</h3>
-              <h6>{project.title}</h6>
+          <div key={index} className='project-card bg-[#BFF747] p-4 flex flex-col justify-between items-start rounded-xl gap-3'>    
+            {/* Top image and content */}
+            <div className='img-content flex flex-col gap-2'>
+              <img className='h-[200px] w-full object-cover rounded-lg' src={project.img} alt="Image None" />
+              <h4>{project.title}</h4>
+              <span className='line-clamp-2 text-sm leading-6 text-gray-700'>{project.description}</span>
             </div>
-            {/* button and technology */}
-            <div className= "flex justify-between items-center gap-5">
-              <div className="tech-loop flex flex-wrap gap-2">
+
+            {/* --------------      button and technology    ---------------------------   */}
+            <div className= "flex justify-between items-center gap-4">
+              <div className="tech-loop technology-used flex flex-wrap gap-2">
                 {project.technology_used.map((items, index) => (
-                  console.log(items),
-                    <span style={{fontSize: "13px", color: "#fff", lineHeight: "1.2em !important", backgroundColor:"#000", padding: "3px 8px", borderRadius: "4px",}}>{items}</span>
+                  // console.log(items),
+                    <span key={index} className="technology-used">{items}</span>
                 ))}
               </div>
               <div>
-                <button style={{padding: "15px", border: "1px solid red", borderRadius: "25px", backgroundColor: "black", color: "#fff"}}>View</button>
+                <Link to={`/single-portfolio/${project.id}`}> <button className='project-view'>View</button></Link>
               </div>
             </div>
             
@@ -65,7 +69,7 @@ const App = () => {
 
 
   return (
-    <div className='project-showcase py-24'>
+    <div className='project-showcase container py-24'>
       {/* <Segmented
         value={alignValue}
         style={{ marginBottom: 8 }}

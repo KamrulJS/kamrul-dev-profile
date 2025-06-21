@@ -1,26 +1,98 @@
+import { useParams } from "react-router-dom";
 import Single1Img from "../../../assets/images/portfolio/p_single.png";
 import Single2Img from "../../../assets/images/portfolio/p_single2.png";
 import Star2Img from "../../../assets/images/v1/star2.png";
 import FadeInRight from "../../animation/FadeInRight";
 import FadeInUp from "../../animation/FadeInUp";
-const projectResolveSteps = [
-	{
-		id: crypto.randomUUID(),
-		title: "Concept Development",
-		text: "Based on the market research findings, the design team began developing conceptual designs for the smart thermostat. They brainstormed ideas, created mood boards, and explored various design directions.",
-	},
-	{
-		id: crypto.randomUUID(),
-		title: "Manufacturing and Production",
-		text: "Once the design was finalized, the project transitioned to the manufacturing phase. Materials, suppliers, and production processes were carefully selected to ensure quality and cost-effectiveness.",
-	},
-	{
-		id: crypto.randomUUID(),
-		title: "Success and Impact",
-		text: "The smart home thermostat quickly gained popularity and was well-received in the market. The project was a success, benefiting both the company and the environment.",
-	},
-];
+import servicesData from "../../../page/Database/Projects_database";
+import { useEffect, useState } from "react";
+
+
+
 function PortfolioDetails() {
+	const id = useParams()
+	const Singleid = id.id;
+
+	//  ---------------   Wordpress data ---------------------------------
+
+	 // 1. State to hold the fetched data
+  const [data, setData] = useState(); 
+  console.log(data);
+  
+  
+	// 2. State to manage loading status
+	const [loading, setLoading] = useState(false); 
+  
+	// 3. State to handle any errors
+	const [error, setError] = useState(null); 
+
+  // 4. useEffect hook for fetching data
+useEffect(() => {
+    const fetchData = async () => {
+      // Set loading to true at the very beginning of the fetch operation
+      setLoading(true); 
+      setError(null); // Clear any previous errors
+
+      try {
+        const username = 'mkkamrulislampk@gmail.com';
+        // This is your Application Password
+        const password = 'mZ7j klzt wqH7 hdzu 6Dip ORzS'; 
+
+        // Encode the username and password in Base64
+        const encodedCredentials = btoa(`${username}:${password}`);
+
+        const response = await fetch('https://api-portfolio.kamruldevs.com/wp-json/jet-cct/portfolio', {
+          method: 'GET', // Or 'POST', 'PUT', etc. depending on your API needs
+          headers: {
+            // Add the Authorization header for Basic Auth
+            'Authorization': `Basic ${encodedCredentials}`,
+            'Content-Type': 'application/json' // Often required for POST/PUT, good practice for GET too
+          }
+        });
+        
+        // Always check for a successful response (status 200-299)
+        if (!response.ok) {
+          // If the response is not OK, throw an error
+          // For auth issues, response.status might be 401 (Unauthorized) or 403 (Forbidden)
+          throw new Error(`HTTP error! Status: ${response.status} - ${response.statusText}`);
+        }
+        
+        const result = await response.json();
+        setData(result);
+      } catch (err) {
+        console.error("Fetch error:", err); // Log the error for debugging
+        setError(err); // Set the error state
+      } finally {
+        setLoading(false); // Always set loading to false when the fetch is complete
+      }
+    };
+
+    fetchData(); // Execute the fetch function when the component mounts
+  }, []); // Empty dependency array ensures this runs once on mount
+
+
+
+
+
+
+
+
+
+
+
+
+	// console.log(servicesData);
+	// const portfolioData = servicesData.find(service => service.projects.id === id )
+
+	const service = servicesData.find(service =>
+		service.projects && service.projects.find(project => project.id === Singleid));
+
+	const ProjectDetails = service ? service.projects.find(project => project.id === Singleid) : null;
+
+	// console.log("projectSingle", ProjectDetails);
+
+
+	
 	return (
 		<div className="aximo-project-single-section">
 			<div className="container">
@@ -37,8 +109,8 @@ function PortfolioDetails() {
 						<p>June</p>
 					</div>
 					<div className="aximo-project-info">
-						<h3>Duration:</h3>
-						<p>Two Months</p>
+						<h4><b>Duration: </b></h4>
+						<p> Two Months</p>
 					</div>
 					<div className="aximo-project-info">
 						<h3>Cost:</h3>
@@ -49,15 +121,14 @@ function PortfolioDetails() {
 					<div className="row">
 						<div className="col-lg-4 order-lg-2">
 							<FadeInRight className="aximo-project-single-thumb2 ">
-								<img src={Single2Img} alt="Single 2" />
+								<img  className="lg:h-[550px] h-[450px] w-full object-cover" src={Single2Img} alt="Single 2" />
 							</FadeInRight>
 						</div>
 						<div className="col-lg-8">
 							<div className="aximo-default-content m-right-gap">
 								<h2>
-									How we initiate and
 									<span className="aximo-title-animation">
-										resolve the project
+										{ProjectDetails.title}
 										<span className="aximo-title-icon">
 											<img src={Star2Img} alt="star" />
 										</span>
@@ -67,16 +138,12 @@ function PortfolioDetails() {
 									The project began when a leading technology identified a market need for an
 									innovative and energy-efficient smart home thermostat.
 								</p>
-								<div className="aximo-resolve-project-wrap">
-									{projectResolveSteps.map((item, index) => (
-										<div key={item.id} className="aximo-resolve-project-item">
-											<h3>
-												{index + 1}. {item.title}:
-											</h3>
-											<p>{item.text}</p>
-										</div>
-									))}
-								</div>
+							</div>
+							<div className="tech-loop technology-used flex flex-wrap gap-2">
+								{ProjectDetails.technology_used.map((items, index) => (
+								// console.log(items),
+									<span key={index} className="technology-used">{items}</span>
+								))}
 							</div>
 						</div>
 					</div>

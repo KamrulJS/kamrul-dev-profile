@@ -4,7 +4,7 @@ import PortfolioDetails from "../../components/portfolio/single/PortfolioDetails
 function SinglePortfolio() {
 	return (
 		<>
-			<BreadCrumb title="Portfolio Deatails" />
+			<BreadCrumb title="Project Deatails" />
 			<PortfolioDetails />
 			<Projects />
 		</>

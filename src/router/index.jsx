@@ -108,7 +108,7 @@ export const router = createBrowserRouter([
 						element: <PortfolioTwoColumn />,
 					},
 					{
-						path: "/single-portfolio",
+						path: "/single-portfolio/:id",
 						element: <SinglePortfolio />,
 					},
 					{
