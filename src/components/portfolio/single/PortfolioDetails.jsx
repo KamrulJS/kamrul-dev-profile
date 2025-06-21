@@ -17,7 +17,7 @@ function PortfolioDetails() {
 
 	 // 1. State to hold the fetched data
   const [data, setData] = useState(); 
-  console.log(data);
+//   console.log(data);
   
   
 	// 2. State to manage loading status
@@ -74,13 +74,6 @@ useEffect(() => {
 
 
 
-
-
-
-
-
-
-
 	// console.log(servicesData);
 	// const portfolioData = servicesData.find(service => service.projects.id === id )
 
@@ -128,7 +121,7 @@ useEffect(() => {
 							<div className="aximo-default-content m-right-gap">
 								<h2>
 									<span className="aximo-title-animation">
-										{ProjectDetails.title}
+										{/* {ProjectDetails.title} */}
 										<span className="aximo-title-icon">
 											<img src={Star2Img} alt="star" />
 										</span>
