@@ -4,21 +4,25 @@ import Single2Img from "../../../assets/images/portfolio/p_single2.png";
 import Star2Img from "../../../assets/images/v1/star2.png";
 import FadeInRight from "../../animation/FadeInRight";
 import FadeInUp from "../../animation/FadeInUp";
-import servicesData from "../../../page/Database/Projects_database";
+import projectsData from "../../../page/Database/Projects_database";
 import { useEffect, useState } from "react";
 
 
 
 function PortfolioDetails() {
-	const id = useParams()
-	const Singleid = id.id;
 
-	//  ---------------   Wordpress data ---------------------------------
+	const { id } = useParams(); // This will give you the '12' string from the URL
+	const idx = id; // Renaming for consistency with your variable name 'idx'
+	console.log("ID from URL:", idx);
 
-	 // 1. State to hold the fetched data
-  const [data, setData] = useState(); 
-//   console.log(data);
-  
+
+	const projectDetails = projectsData.find(project => project._ID === idx);
+
+	console.log("Found Project Details:", projectDetails);
+
+	// 1. State to hold the fetched data
+  	const [data, setData] = useState(); 
+	//console.log(data);
   
 	// 2. State to manage loading status
 	const [loading, setLoading] = useState(false); 
@@ -27,62 +31,50 @@ function PortfolioDetails() {
 	const [error, setError] = useState(null); 
 
   // 4. useEffect hook for fetching data
-useEffect(() => {
-    const fetchData = async () => {
-      // Set loading to true at the very beginning of the fetch operation
-      setLoading(true); 
-      setError(null); // Clear any previous errors
+// useEffect(() => {
+//     const fetchData = async () => {
+//       // Set loading to true at the very beginning of the fetch operation
+//       setLoading(true); 
+//       setError(null); // Clear any previous errors
 
-      try {
-        const username = 'mkkamrulislampk@gmail.com';
-        // This is your Application Password
-        const password = 'mZ7j klzt wqH7 hdzu 6Dip ORzS'; 
+//       try {
+//         const username = 'mkkamrulislampk@gmail.com';
+//         // This is your Application Password
+//         const password = 'mZ7j klzt wqH7 hdzu 6Dip ORzS'; 
 
-        // Encode the username and password in Base64
-        const encodedCredentials = btoa(`${username}:${password}`);
+//         // Encode the username and password in Base64
+//         const encodedCredentials = btoa(`${username}:${password}`);
 
-        const response = await fetch('https://api-portfolio.kamruldevs.com/wp-json/jet-cct/portfolio', {
-          method: 'GET', // Or 'POST', 'PUT', etc. depending on your API needs
-          headers: {
-            // Add the Authorization header for Basic Auth
-            'Authorization': `Basic ${encodedCredentials}`,
-            'Content-Type': 'application/json' // Often required for POST/PUT, good practice for GET too
-          }
-        });
+//         const response = await fetch('https://api-portfolio.kamruldevs.com/wp-json/jet-cct/portfolio', {
+//           method: 'GET', // Or 'POST', 'PUT', etc. depending on your API needs
+//           headers: {
+//             // Add the Authorization header for Basic Auth
+//             'Authorization': `Basic ${encodedCredentials}`,
+//             'Content-Type': 'application/json' // Often required for POST/PUT, good practice for GET too
+//           }
+//         });
         
-        // Always check for a successful response (status 200-299)
-        if (!response.ok) {
-          // If the response is not OK, throw an error
-          // For auth issues, response.status might be 401 (Unauthorized) or 403 (Forbidden)
-          throw new Error(`HTTP error! Status: ${response.status} - ${response.statusText}`);
-        }
+//         // Always check for a successful response (status 200-299)
+//         if (!response.ok) {
+//           // If the response is not OK, throw an error
+//           // For auth issues, response.status might be 401 (Unauthorized) or 403 (Forbidden)
+//           throw new Error(`HTTP error! Status: ${response.status} - ${response.statusText}`);
+//         }
         
-        const result = await response.json();
-        setData(result);
-      } catch (err) {
-        console.error("Fetch error:", err); // Log the error for debugging
-        setError(err); // Set the error state
-      } finally {
-        setLoading(false); // Always set loading to false when the fetch is complete
-      }
-    };
+//         const result = await response.json();
+//         setData(result);
+//       } catch (err) {
+//         console.error("Fetch error:", err); // Log the error for debugging
+//         setError(err); // Set the error state
+//       } finally {
+//         setLoading(false); // Always set loading to false when the fetch is complete
+//       }
+//     };
 
-    fetchData(); // Execute the fetch function when the component mounts
-  }, []); // Empty dependency array ensures this runs once on mount
-
-
+//     fetchData(); // Execute the fetch function when the component mounts
+//   }, []);
 
 
-
-	// console.log(servicesData);
-	// const portfolioData = servicesData.find(service => service.projects.id === id )
-
-	const service = servicesData.find(service =>
-		service.projects && service.projects.find(project => project.id === Singleid));
-
-	const ProjectDetails = service ? service.projects.find(project => project.id === Singleid) : null;
-
-	// console.log("projectSingle", ProjectDetails);
 
 
 	
@@ -121,7 +113,7 @@ useEffect(() => {
 							<div className="aximo-default-content m-right-gap">
 								<h2>
 									<span className="aximo-title-animation">
-										{/* {ProjectDetails.title} */}
+										{ProjectDetails.title}
 										<span className="aximo-title-icon">
 											<img src={Star2Img} alt="star" />
 										</span>
@@ -133,10 +125,10 @@ useEffect(() => {
 								</p>
 							</div>
 							<div className="tech-loop technology-used flex flex-wrap gap-2">
-								{ProjectDetails.technology_used.map((items, index) => (
+								{/* {ProjectDetails.technology_used.map((items, index) => (
 								// console.log(items),
 									<span key={index} className="technology-used">{items}</span>
-								))}
+								))} */}
 							</div>
 						</div>
 					</div>

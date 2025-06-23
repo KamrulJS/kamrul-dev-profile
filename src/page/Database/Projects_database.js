@@ -726,10 +726,10 @@ const response = await fetch('https://api-portfolio.kamruldevs.com/wp-json/jet-c
   }
 });
 
-if (!response.ok) {
+if (!response.ok) { 
   throw new Error(`HTTP error! status: ${response.status}`);
 }
 
-const servicesData = await response.json();
+const projectsData = await response.json();
 
-export default servicesData;
+export default projectsData;

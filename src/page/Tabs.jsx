@@ -1,6 +1,6 @@
 import React from 'react';
 import { Segmented, Tabs } from 'antd';
-import servicesData from './Database/Projects_database';
+import projectsData from './Database/Projects_database';
 import { Link } from 'react-router-dom';
 
 
@@ -9,16 +9,16 @@ const onChange = key => {
   console.log(key);
 };
 
-console.log(servicesData);
+console.log(projectsData);
 
 
+// ------    Tab example
 // const items = [
 //   { key: '1', 
 //     label: 'Tab 1', 
 //   },
 //   { key: '2', label: 'Tab 2', children: 'Content of Tab Pane 2' },
 // ];
-
 
 
 //  const ServiceItems = servicesData.map((service, idx) => ({
@@ -60,37 +60,27 @@ console.log(servicesData);
 //     )
 //   }));
 
-  // const allTechnologies = Array.from(
-  //   new Set(
-  //     servicesData.flatMap(service =>
-  //       service.categories
-  //         ? service.categories.map(tech => tech.trim())
-  //         : []
-  //     )
-  //   )
-  // );
 
-  // console.log(allTechnologies)
 
-  // Step 2: Map by each tech
-  const items = servicesData.map((tech, idx) => ({
+
+  // Step 2: Map by each project
+  const items = projectsData.map((project, idx) => ({
     key: String(idx + 1),
-    label: tech.categories,
+    label: project.categories,
     children: (
       <div className='p-6'>
         <div className='grid grid-cols-4 gap-4 rounded-xl'>
-          {servicesData.map((service, index) => (
-              <div key={index} className='project-card bg-[#BFF747] p-4 flex flex-col justify-between items-start rounded-xl gap-3'>
+              <div className='project-card bg-[#BFF747] p-4 flex flex-col justify-between items-start rounded-xl gap-3'>
                 {/* Image + Title + Description */}
                 <div className='img-content flex flex-col gap-2'>
                   <img
                     className='h-[200px] w-full object-cover rounded-lg'
-                    src={service.image || "/images/fallback.jpg"}
-                    alt={service.title || "No Image"}
+                    src={project.image || "/images/fallback.jpg"}
+                    alt={project.title || "No Image"}
                   />
-                  <h4>{service.title}</h4>
+                  <h4>{project.title}</h4>
                   <span className='line-clamp-2 text-sm leading-6 text-gray-700'>
-                    {service.description || "No description available."}
+                    {project.description || "No description available."}
                   </span>
                 </div>
 
@@ -102,13 +92,12 @@ console.log(servicesData);
                     ))} */}
                   </div>
                   <div>
-                    <Link to={`/single-portfolio/${service._ID}`}>
+                    <Link to={`/single-portfolio/${project._ID}`}>
                       <button className='project-view'>View</button>
                     </Link>
                   </div>
                 </div>
               </div>
-            ))}
         </div>
       </div>
     )
@@ -118,12 +107,15 @@ console.log(servicesData);
 
 
 
+
+
+
+
+
 const App = () => {
 
   const [alignValue, setAlignValue] = React.useState('center');
 // console.log(servicesData)
-
-
 
   return (
     <div className='project-showcase container py-24'>

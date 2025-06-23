@@ -3,14 +3,14 @@ import { motion } from "framer-motion";
 const animationVariants = {
 	initial: {
 		opacity: 0,
-		y: 50,
+		y: 80,
 	},
 	animate: (index) => ({
 		opacity: 1,
 		y: 0,
 		transition: {
-			duration: 0.3 * index,
-			delay: 0.03 * index,
+			duration: 0.6 * index,
+			delay: 0.09 * index,
 		},
 	}),
 };
