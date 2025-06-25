@@ -5,137 +5,152 @@ import Star2Img from "../../../assets/images/v1/star2.png";
 import FadeInRight from "../../animation/FadeInRight";
 import FadeInUp from "../../animation/FadeInUp";
 import { useEffect, useState } from "react";
-import projectsData from "../../../page/Database/Projects_database";
+// Import the promise, not the direct data
+import projectsDataPromise from "../../../page/Database/Projects_database";
 
 
 function PortfolioDetails() {
+  const { id } = useParams(); // Get the ID from the URL (e.g., from /single-portfolio/:id)
+  const idx = id; // Renaming for consistency with your variable name 'idx'
+	// console.log("id is", idx); 
 
-	const { id } = useParams(); // This will give you the '12' string from the URL
-	const idx = id; // Renaming for consistency with your variable name 'idx'
-	console.log("ID from URL:", idx);
 
+  // --- State to manage the fetched and found project data ---
+  const [projectDetails, setProjectDetails] = useState(null);
+  const [loading, setLoading] = useState(true); // Start with loading true
+  const [error, setError] = useState(null);
 
-	const projectDetails = projectsData.find(project => project._ID === idx);
+  // --- useEffect to handle asynchronous data fetching and finding ---
+  useEffect(() => {
+    console.log("Effect running for ID:", idx); // Log to see when effect runs
+    const fetchAndFindProject = async () => {
+      try {
+        setLoading(true); // Set loading to true at the start of fetch
+        setError(null);   // Clear any previous errors
 
-	console.log("Found Project Details:", projectDetails);
+        const allProjects = await projectsDataPromise;
+        console.log("All projects data (after await):", allProjects);
 
-	// 1. State to hold the fetched data
-  	const [data, setData] = useState(); 
-	//console.log(data);
+        if (!Array.isArray(allProjects)) {
+          throw new Error("Projects data is not an array. Please check Projects_database.js.");
+        }
+
+        const foundProject = allProjects.find(project => String(project._ID) === String(idx));
+
+        setProjectDetails(foundProject); // Update state with the found project
+        console.log("Found Project Details (after find):", foundProject);
+
+        if (!foundProject) {
+          setError(new Error(`Project with ID "${idx}" not found.`));
+        }
+
+      } catch (err) {
+        console.error("Error fetching or finding project:", err);
+        setError(err); // Set error state if fetching or finding fails
+        setProjectDetails(null); // Ensure projectDetails is null on error
+      } finally {
+        setLoading(false); // Set loading to false regardless of success or failure
+      }
+    };
+
+    fetchAndFindProject(); // Call the async function
+  }, [idx]); // Dependency array: Re-run this effect whenever the URL 'id' (idx) changes
+
   
-	// 2. State to manage loading status
-	const [loading, setLoading] = useState(false); 
-  
-	// 3. State to handle any errors
-	const [error, setError] = useState(null); 
+  // --- Conditional Rendering based on loading/error/data states ---
+  if (loading) {
+    return (
+      <div className="aximo-project-single-section text-center py-20">
+        <p>Loading project details...</p>
+      </div>
+    );
+  }
 
-  // 4. useEffect hook for fetching data
-// useEffect(() => {
-//     const fetchData = async () => {
-//       // Set loading to true at the very beginning of the fetch operation
-//       setLoading(true); 
-//       setError(null); // Clear any previous errors
+  if (error) {
+    return (
+      <div className="aximo-project-single-section text-center py-20 text-red-600">
+        <p>Error: {error.message}</p>
+        <p>Please ensure the API is accessible and the project ID is valid.</p>
+      </div>
+    );
+  }
 
-//       try {
-//         const username = 'mkkamrulislampk@gmail.com';
-//         // This is your Application Password
-//         const password = 'mZ7j klzt wqH7 hdzu 6Dip ORzS'; 
+  if (!projectDetails) {
+    // This handles cases where loading is false, no error, but projectDetails is null (e.g., project not found after search)
+    return (
+      <div className="aximo-project-single-section text-center py-20">
+        <p>Project details not found.</p>
+        <p>Please go back to the portfolio page.</p>
+        {/* You might add a Link back here */}
+      </div>
+    );
+  }
 
-//         // Encode the username and password in Base64
-//         const encodedCredentials = btoa(`${username}:${password}`);
-
-//         const response = await fetch('https://api-portfolio.kamruldevs.com/wp-json/jet-cct/portfolio', {
-//           method: 'GET', // Or 'POST', 'PUT', etc. depending on your API needs
-//           headers: {
-//             // Add the Authorization header for Basic Auth
-//             'Authorization': `Basic ${encodedCredentials}`,
-//             'Content-Type': 'application/json' // Often required for POST/PUT, good practice for GET too
-//           }
-//         });
-        
-//         // Always check for a successful response (status 200-299)
-//         if (!response.ok) {
-//           // If the response is not OK, throw an error
-//           // For auth issues, response.status might be 401 (Unauthorized) or 403 (Forbidden)
-//           throw new Error(`HTTP error! Status: ${response.status} - ${response.statusText}`);
-//         }
-        
-//         const result = await response.json();
-//         setData(result);
-//       } catch (err) {
-//         console.error("Fetch error:", err); // Log the error for debugging
-//         setError(err); // Set the error state
-//       } finally {
-//         setLoading(false); // Always set loading to false when the fetch is complete
-//       }
-//     };
-
-//     fetchData(); // Execute the fetch function when the component mounts
-//   }, []);
-
-
-
-
-	
-	return (
-		<div className="aximo-project-single-section">
-			<div className="container">
-				<FadeInUp className="aximo-project-single-thumb reveal reveal--top">
-					<img src={Single1Img} alt="Single" />
-				</FadeInUp>
-				<div className="aximo-project-info-wrap">
-					<div className="aximo-project-info">
-						<h3>Client:</h3>
-						<p>Alfado Company,UK</p>
-					</div>
-					<div className="aximo-project-info">
-						<h3>Date:</h3>
-						<p>June</p>
-					</div>
-					<div className="aximo-project-info">
-						<h4><b>Duration: </b></h4>
-						<p> Two Months</p>
-					</div>
-					<div className="aximo-project-info">
-						<h3>Cost:</h3>
-						<p>50k USD</p>
-					</div>
-				</div>
-				<div className="aximo-project-single-wrap">
-					<div className="row">
-						<div className="col-lg-4 order-lg-2">
-							<FadeInRight className="aximo-project-single-thumb2 ">
-								<img  className="lg:h-[550px] h-[450px] w-full object-cover" src={Single2Img} alt="Single 2" />
-							</FadeInRight>
-						</div>
-						<div className="col-lg-8">
-							<div className="aximo-default-content m-right-gap">
-								<h2>
-									<span className="aximo-title-animation">
-										{projectDetails.title}
-										{projectDetails.cct_created}
-										<span className="aximo-title-icon">
-											<img src={Star2Img} alt="star" />
-										</span>
-									</span>
-								</h2>
-								<p>
-									The project began when a leading technology identified a market need for an
-									innovative and energy-efficient smart home thermostat.
-								</p>
-							</div>
-							<div className="tech-loop technology-used flex flex-wrap gap-2">
-								{projectDetails.langusage.map((item, index) => (
-								// console.log(items),
-									<span key={index} className="technology-used">{item}</span>
-								))}
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	);
+  // If we reach here, it means loading is complete, no error, and projectDetails is found.
+  return (
+    <div className="aximo-project-single-section">
+      <div className="container">
+        <FadeInUp className="aximo-project-single-thumb reveal reveal--top">
+          {/* Use projectDetails.project_image or similar if available */}
+          <img src={projectDetails.project_image || Single1Img} alt={projectDetails.project_title || "Project Image"} />
+        </FadeInUp>
+        <div className="aximo-project-info-wrap">
+          <div className="aximo-project-info">
+            <h3>Client:</h3>
+            <p>{projectDetails.client || 'N/A'}</p> {/* Use actual data if available */}
+          </div>
+          <div className="aximo-project-info">
+            <h3>Date:</h3>
+            <p>{projectDetails.date || 'N/A'}</p> {/* Use actual data if available */}
+          </div>
+          <div className="aximo-project-info">
+            <h4><b>Duration: </b></h4>
+            <p>{projectDetails.duration || 'N/A'}</p> {/* Use actual data if available */}
+          </div>
+          <div className="aximo-project-info">
+            <h3>Cost:</h3>
+            <p>{projectDetails.cost || 'N/A'}</p> {/* Use actual data if available */}
+          </div>
+        </div>
+        <div className="aximo-project-single-wrap">
+          <div className="row">
+            <div className="col-lg-4 order-lg-2">
+              <FadeInRight className="aximo-project-single-thumb2 ">
+                {/* Use projectDetails.project_image or similar for the second image too */}
+                <img className="lg:h-[550px] h-[450px] w-full object-cover" src={projectDetails.project_image || Single2Img} alt={projectDetails.project_title || "Project Image"} />
+              </FadeInRight>
+            </div>
+            <div className="col-lg-8">
+              <div className="aximo-default-content m-right-gap">
+                <h2>
+                  <span className="aximo-title-animation">
+                    {/* Access title correctly, potentially from project_title or title.rendered */}
+                    {projectDetails.project_title || projectDetails.title?.rendered || "Project Title Not Available"}
+                    <span className="aximo-title-icon">
+                      <img src={Star2Img} alt="star" />
+                    </span>
+                  </span>
+                </h2>
+                <p>
+                  {projectDetails.description || "No description available for this project."}
+                </p>
+              </div>
+              <div className="tech-loop technology-used flex flex-wrap gap-2">
+                {/* Check if langusage exists and is an array before mapping */}
+                {projectDetails.langusage && Array.isArray(projectDetails.langusage) ? (
+                  projectDetails.langusage.map((item, index) => (
+                    <span key={index} className="technology-used">{item}</span>
+                  ))
+                ) : (
+                  <p>No technologies listed.</p>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 }
 
 export default PortfolioDetails;

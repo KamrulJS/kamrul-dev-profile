@@ -105,7 +105,7 @@ const Tab = () => {
                 ))}
               </div>
               <div>
-                <Link to={`/single-portfolio/${project._id || project.ID || 'default-id'}`}> {/* Use _id or ID, provide fallback */}
+                <Link to={`/single-portfolio/${project._ID || project.ID || 'default-id'}`}> {/* Use _id or ID, provide fallback */}
                   <button className='project-view bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600'>View</button>
                 </Link>
               </div>
