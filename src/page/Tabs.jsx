@@ -4,6 +4,9 @@ import { Link } from 'react-router-dom';
 // Import the Promise that resolves with your data
 import projectsDataPromise from './Database/Projects_database'; // Correct import name
 
+
+
+
 const onChange = key => {
   console.log(key);
 };
@@ -21,17 +24,19 @@ const Tab = () => {
 
   // useEffect hook to fetch data when the component mounts
   useEffect(() => {
+
     const loadProjects = async () => {
+
       try {
-        setLoading(true); // Set loading to true before fetching
-        setError(null);   // Clear any previous errors
+        setLoading(true);
+        setError(null);
 
         // Await the promise to get the actual data
         const fetchedData = await projectsDataPromise;
-        setProjectsData(fetchedData); // Update state with fetched data
+        setProjectsData(fetchedData); 
       } catch (err) {
         console.error("Error loading projects data:", err);
-        setError(err); // Set error state if fetching fails
+        setError(err); 
         setProjectsData([]); // Ensure projectsData is an empty array on error
       } finally {
         setLoading(false); // Set loading to false after fetching (success or failure)
@@ -105,7 +110,7 @@ const Tab = () => {
                 ))}
               </div>
               <div>
-                <Link to={`/single-portfolio/${project._ID || project.ID || 'default-id'}`}> {/* Use _id or ID, provide fallback */}
+                <Link to={`/single-portfolio/${project?.project_title.replace(/\s+/g, '-')}`} state={{ id: project._ID }}> {/* Use _id or ID, provide fallback */}
                   <button className='project-view bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600'>View</button>
                 </Link>
               </div>

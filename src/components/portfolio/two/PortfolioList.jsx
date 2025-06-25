@@ -69,7 +69,7 @@ function PortfolioList() {
 			<div className="container">
 				<div className="row">
 					{portfolioListData.map((portfolio, index) => (
-						<FadeInStagger className="col-lg-6" key={portfolio.id} index={index}>
+						<FadeInStagger className="col-lg-4" key={portfolio.id} index={index}>
 							<PortfolioCard portfolio={portfolio} />
 						</FadeInStagger>
 					))}

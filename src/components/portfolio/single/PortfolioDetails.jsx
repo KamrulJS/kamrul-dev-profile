@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import Single1Img from "../../../assets/images/portfolio/p_single.png";
 import Single2Img from "../../../assets/images/portfolio/p_single2.png";
 import Star2Img from "../../../assets/images/v1/star2.png";
@@ -10,38 +10,41 @@ import projectsDataPromise from "../../../page/Database/Projects_database";
 
 
 function PortfolioDetails() {
-  const { id } = useParams(); // Get the ID from the URL (e.g., from /single-portfolio/:id)
-  const idx = id; // Renaming for consistency with your variable name 'idx'
-	// console.log("id is", idx); 
 
 
-  // --- State to manage the fetched and found project data ---
-  const [projectDetails, setProjectDetails] = useState(null);
-  const [loading, setLoading] = useState(true); // Start with loading true
-  const [error, setError] = useState(null);
+  	// const { project_title } = useParams(); // Get the project_title from the URL
+
+    const location = useLocation();
+    // console.log("location", location);
+    const id = location.state?.id;
+
+	// --- State to manage the fetched and found project data ---
+	const [projectDetails, setProjectDetails] = useState(null);
+	const [loading, setLoading] = useState(true); // Start with loading true
+	const [error, setError] = useState(null);
 
   // --- useEffect to handle asynchronous data fetching and finding ---
   useEffect(() => {
-    console.log("Effect running for ID:", idx); // Log to see when effect runs
+
     const fetchAndFindProject = async () => {
       try {
         setLoading(true); // Set loading to true at the start of fetch
         setError(null);   // Clear any previous errors
 
         const allProjects = await projectsDataPromise;
-        console.log("All projects data (after await):", allProjects);
+        // console.log("All projects data (after await):", allProjects);
 
         if (!Array.isArray(allProjects)) {
           throw new Error("Projects data is not an array. Please check Projects_database.js.");
         }
 
-        const foundProject = allProjects.find(project => String(project._ID) === String(idx));
-
+        const foundProject = allProjects.find(project => String(project?._ID) === id);
         setProjectDetails(foundProject); // Update state with the found project
+
         console.log("Found Project Details (after find):", foundProject);
 
         if (!foundProject) {
-          setError(new Error(`Project with ID "${idx}" not found.`));
+          setError(new Error(`Project with ID "${id}" not found.`));
         }
 
       } catch (err) {
@@ -54,7 +57,7 @@ function PortfolioDetails() {
     };
 
     fetchAndFindProject(); // Call the async function
-  }, [idx]); // Dependency array: Re-run this effect whenever the URL 'id' (idx) changes
+  }, [id]); // Dependency array: Re-run this effect whenever the URL 'project_title' changes
 
   
   // --- Conditional Rendering based on loading/error/data states ---

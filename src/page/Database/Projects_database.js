@@ -15,8 +15,8 @@ const projectsData = (async () => {
     });
 
     const data = await response.json();
-    console.log("Portfolio data fetched successfully.", data); // Corrected typo: 'projects' to 'data'
-    return data; // Resolve the promise with the fetched data
+    // console.log("Portfolio data fetched successfully.", data); // Corrected typo: 'projects' to 'data'
+    return data; //Resolve the promise with the fetched data
   } catch (error) {
     console.error("Failed to fetch portfolio data:", error);
     // Important: Reject the promise or resolve with an empty array/error state
