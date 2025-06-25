@@ -11,7 +11,7 @@ export default function Preloader() {
 
 		const timer = setTimeout(() => {
 			setShowLoader(false);
-		}, 700);
+		}, 2000);
 
 		return () => clearTimeout(timer);
 	});

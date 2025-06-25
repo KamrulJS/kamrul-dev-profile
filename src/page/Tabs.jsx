@@ -1,131 +1,131 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Segmented, Tabs } from 'antd';
-import projectsData from './Database/Projects_database';
 import { Link } from 'react-router-dom';
-
-
+// Import the Promise that resolves with your data
+import projectsDataPromise from './Database/Projects_database'; // Correct import name
 
 const onChange = key => {
   console.log(key);
 };
 
-console.log(projectsData);
+const Tab = () => {
+  // State to hold the fetched projects data
+  const [projectsData, setProjectsData] = useState([]);
+  // State to manage loading status
+  const [loading, setLoading] = useState(true);
+  // State to manage any errors during fetching
+  const [error, setError] = useState(null);
 
+  // State for Ant Design Segmented control (align value)
+  const [alignValue, setAlignValue] = useState('center');
 
-// ------    Tab example
-// const items = [
-//   { key: '1', 
-//     label: 'Tab 1', 
-//   },
-//   { key: '2', label: 'Tab 2', children: 'Content of Tab Pane 2' },
-// ];
+  // useEffect hook to fetch data when the component mounts
+  useEffect(() => {
+    const loadProjects = async () => {
+      try {
+        setLoading(true); // Set loading to true before fetching
+        setError(null);   // Clear any previous errors
 
+        // Await the promise to get the actual data
+        const fetchedData = await projectsDataPromise;
+        setProjectsData(fetchedData); // Update state with fetched data
+      } catch (err) {
+        console.error("Error loading projects data:", err);
+        setError(err); // Set error state if fetching fails
+        setProjectsData([]); // Ensure projectsData is an empty array on error
+      } finally {
+        setLoading(false); // Set loading to false after fetching (success or failure)
+      }
+    };
 
-//  const ServiceItems = servicesData.map((service, idx) => ({
+    loadProjects();
+  }, []); // Empty dependency array ensures this effect runs only once on mount
 
-//     key: String(idx + 1),
-//     label: service.serviceName || `Service ${idx + 1}`,
-//     children: (
-//       <div className=' p-6'>
-//         {/* <h2 className=" mb-4">{service.serviceName}</h2> */}
-//         <div className='grid grid-cols-4 gap-4 rounded-xl'>
-          
-//         {service.projects.map((project, index) => (
-          
-//           <div key={index} className='project-card bg-[#BFF747] p-4 flex flex-col justify-between items-start rounded-xl gap-3'>    
-//             {/* Top image and content */}
-//             <div className='img-content flex flex-col gap-2'>
-//               <img className='h-[200px] w-full object-cover rounded-lg' src={project.img} alt="Image None" />
-//               <h4>{project.title}</h4>
-//               <span className='line-clamp-2 text-sm leading-6 text-gray-700'>{project.description}</span>
-//             </div>
+  // --- Conditional Rendering based on loading/error states ---
+  if (loading) {
+    return (
+      <div className='project-showcase container py-24 text-center'>
+        <p>Loading projects...</p>
+      </div>
+    );
+  }
 
-//             {/* --------------      button and technology    ---------------------------   */}
-//             <div className= "flex justify-between items-center gap-4">
-//               <div className="tech-loop technology-used flex flex-wrap gap-2">
-//                 {project.technology_used.map((items, index) => (
-//                   // console.log(items),
-//                     <span key={index} className="technology-used">{items}</span>
-//                 ))}
-//               </div>
-//               <div>
-//                 <Link to={`/single-portfolio/${project.id}`}> <button className='project-view'>View</button></Link>
-//               </div>
-//             </div>
-            
-//           </div>
-//         ))}
-//         </div>
-//       </div>
-//     )
-//   }));
+  if (error) {
+    return (
+      <div className='project-showcase container py-24 text-center text-red-600'>
+        <p>Error loading projects: {error.message}</p>
+        <p>Please check your internet connection or API availability.</p>
+      </div>
+    );
+  }
 
+  // If no data is found after loading (e.g., API returned empty array)
+  if (!projectsData || projectsData.length === 0) {
+    return (
+      <div className='project-showcase container py-24 text-center'>
+        <p>No projects found.</p>
+      </div>
+    );
+  }
 
-
-
+  // If data is loaded successfully, proceed to map and render
   // Step 2: Map by each project
   const items = projectsData.map((project, idx) => ({
     key: String(idx + 1),
-    label: project.categories,
+    // Ensure project.categories exists and is a string, or provide fallback
+    label: project.categories || `Category ${idx + 1}`,
     children: (
       <div className='p-6'>
-        <div className='grid grid-cols-4 gap-4 rounded-xl'>
-              <div className='project-card bg-[#BFF747] p-4 flex flex-col justify-between items-start rounded-xl gap-3'>
-                {/* Image + Title + Description */}
-                <div className='img-content flex flex-col gap-2'>
-                  <img
-                    className='h-[200px] w-full object-cover rounded-lg'
-                    src={project.image || "/images/fallback.jpg"}
-                    alt={project.title || "No Image"}
-                  />
-                  <h4>{project.title}</h4>
-                  <span className='line-clamp-2 text-sm leading-6 text-gray-700'>
-                    {project.description || "No description available."}
-                  </span>
-                </div>
+        <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 rounded-xl'>
+          <div className='project-card bg-[#BFF747] p-4 flex flex-col justify-between items-start rounded-xl gap-3'>
+            {/* Image + Title + Description */}
+            <div className='img-content flex flex-col gap-2'>
+              {/* console.log(project) is generally not recommended directly inside render method,
+                  it will log on every re-render. Do it inside useEffect or a utility function if needed */}
+              <img
+                className='w-[200px] object-container rounded-lg'
+                src={project.project_image || "/images/fallback.jpg"}
+                alt={project.title || "No Image"}
+              />
 
-                {/* Technologies + View button */}
-                <div className="flex justify-between items-center gap-4">
-                  <div className="tech-loop technology-used flex flex-wrap gap-2">
-                    {/* {service.langusage.map((item, i) => (
-                      <span key={i} className="technology-used">{item.trim()}</span>
-                    ))} */}
-                  </div>
-                  <div>
-                    <Link to={`/single-portfolio/${project._ID}`}>
-                      <button className='project-view'>View</button>
-                    </Link>
-                  </div>
-                </div>
+              <h4>{project.project_title || "Untitled Project"}</h4>
+              <span className='line-clamp-2 text-sm leading-6 text-gray-700'>
+                {project.description || "No description available."}
+              </span>
+            </div>
+
+            {/* Technologies + View button */}
+            <div className="flex justify-between items-center gap-4 w-full"> {/* Added w-full for full width */}
+              <div className="tech-loop technology-used flex flex-wrap gap-2">
+                {/* Assuming project.langusage is an array of strings like ["React", "Node.js"] */}
+                {project.langusage && project.langusage.map((item, i) => (
+                  <span key={i} className="technology-used text-xs bg-gray-200 px-2 py-1 rounded">
+                    {item.trim()}
+                  </span>
+                ))}
               </div>
+              <div>
+                <Link to={`/single-portfolio/${project._id || project.ID || 'default-id'}`}> {/* Use _id or ID, provide fallback */}
+                  <button className='project-view bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600'>View</button>
+                </Link>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     )
   }));
 
 
-
-
-
-
-
-
-
-
-const App = () => {
-
-  const [alignValue, setAlignValue] = React.useState('center');
-// console.log(servicesData)
-
   return (
     <div className='project-showcase container py-24'>
-      {/* <Segmented
+      <Segmented
         value={alignValue}
         style={{ marginBottom: 8 }}
         onChange={setAlignValue}
         options={['start', 'center', 'end']}
-      />    */}
-        
+      />
+
       <Tabs
         defaultActiveKey="1"
         items={items}
@@ -136,8 +136,4 @@ const App = () => {
   );
 };
 
-
-
-
-
-export default App;
+export default Tab;

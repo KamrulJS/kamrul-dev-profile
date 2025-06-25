@@ -1,4 +1,7 @@
-function imageReveal() {
+import gsap from "gsap";
+import React from "react";
+
+export function imageReveal() {
   const revealContainers = document.querySelectorAll(".reveal");
 
   revealContainers.forEach((container) => {
@@ -54,6 +57,7 @@ function imageReveal() {
   });
 
   ScrollTrigger.refresh();
-}
 
 imageReveal();
+}
+

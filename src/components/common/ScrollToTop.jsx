@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 
 export default function ScrollToTop() {
+	
 	const [showTopBtn, setShowTopBtn] = useState(false);
 
 	useEffect(() => {

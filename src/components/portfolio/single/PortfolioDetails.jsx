@@ -4,9 +4,8 @@ import Single2Img from "../../../assets/images/portfolio/p_single2.png";
 import Star2Img from "../../../assets/images/v1/star2.png";
 import FadeInRight from "../../animation/FadeInRight";
 import FadeInUp from "../../animation/FadeInUp";
-import projectsData from "../../../page/Database/Projects_database";
 import { useEffect, useState } from "react";
-
+import projectsData from "../../../page/Database/Projects_database";
 
 
 function PortfolioDetails() {
@@ -81,7 +80,7 @@ function PortfolioDetails() {
 	return (
 		<div className="aximo-project-single-section">
 			<div className="container">
-				<FadeInUp className="aximo-project-single-thumb">
+				<FadeInUp className="aximo-project-single-thumb reveal reveal--top">
 					<img src={Single1Img} alt="Single" />
 				</FadeInUp>
 				<div className="aximo-project-info-wrap">
@@ -113,7 +112,8 @@ function PortfolioDetails() {
 							<div className="aximo-default-content m-right-gap">
 								<h2>
 									<span className="aximo-title-animation">
-										{ProjectDetails.title}
+										{projectDetails.title}
+										{projectDetails.cct_created}
 										<span className="aximo-title-icon">
 											<img src={Star2Img} alt="star" />
 										</span>
@@ -125,10 +125,10 @@ function PortfolioDetails() {
 								</p>
 							</div>
 							<div className="tech-loop technology-used flex flex-wrap gap-2">
-								{/* {ProjectDetails.technology_used.map((items, index) => (
+								{projectDetails.langusage.map((item, index) => (
 								// console.log(items),
-									<span key={index} className="technology-used">{items}</span>
-								))} */}
+									<span key={index} className="technology-used">{item}</span>
+								))}
 							</div>
 						</div>
 					</div>
