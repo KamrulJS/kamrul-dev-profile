@@ -1,3 +1,5 @@
+import ContactForm from "../../contact/ContactForm";
+import ContactFormFooter from "../../contact/ContactFormFooter";
 import FooterBottom from "./FooterBottom";
 import FooterContent from "./FooterContent";
 import MessageForm from "./MessageForm";
@@ -14,7 +16,8 @@ function Footer() {
 						<div className="col-lg-5">
 							<div className="aximo-form-wrap">
 								<h4>Send us a message</h4>
-								<MessageForm />
+								{/* <MessageForm /> */}
+								<ContactFormFooter/>
 							</div>
 						</div>
 					</div>

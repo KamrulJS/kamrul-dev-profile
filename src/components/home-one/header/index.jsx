@@ -12,13 +12,13 @@ function Header() {
 	return (
 		<header className="site-header aximo-header-section aximo-header1 dark-bg" id="sticky-menu">
 			<div className="container">
-				<nav className="navbar site-navbar">
+				<nav className="navbar site-navbar flex justify-center items-center gap-10">
 					<HeaderLogo />
 					<div className="menu-block-wrapper">
 						<DesktopNav>
 							<NavItem url="/"> Home </NavItem>
-							<NavItem url="about-us">About Me</NavItem>
-							<NavItem url="blog">Our Blog</NavItem>
+							<NavItem url="about-us">About Me </NavItem>
+							{/* <NavItem url="blog">Blogs</NavItem> */}
 							<NavItem url="service">Service </NavItem>
 							<NavItem url="team">Team </NavItem>
 							<NavItem url="portfolio-two">Portfolio </NavItem>

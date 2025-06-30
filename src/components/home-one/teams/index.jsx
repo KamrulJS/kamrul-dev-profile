@@ -1,4 +1,5 @@
 import Star2Img from "../../../assets/images/v1/star2.png";
+import { imageReveal } from "../../../page/utility/Animation";
 import FadeInStagger from "../../animation/FadeInStagger";
 import TeamCard from "./TeamCard";
 

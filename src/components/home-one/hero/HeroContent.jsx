@@ -15,7 +15,7 @@ function HeroContent() {
 					<h1>
 						<span className="aximo-title-animation">
 							A creative
-							<img src={StarImg} alt="StarImg" />
+							
 						</span>{" "}
 						design studio
 					</h1>
@@ -46,7 +46,7 @@ function HeroContent() {
 					</div>
 				</FadeInStaggerTwoChildren>
 				<FadeInStaggerTwoChildren>
-					<Link className="aximo-call-btn" to="/contact-us">
+					<Link className="booking-call-btn px-3" to="/contact-us">
 						Book a free consultation <i className="icon-call"></i>
 					</Link>
 					<div className="aximo-hero-shape">

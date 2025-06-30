@@ -1,5 +1,4 @@
 import gsap from "gsap";
-import React from "react";
 
 export function imageReveal() {
   const revealContainers = document.querySelectorAll(".reveal");

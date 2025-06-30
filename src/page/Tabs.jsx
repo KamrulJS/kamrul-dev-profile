@@ -72,31 +72,32 @@ const Tab = () => {
       </div>
     );
   }
+  console.log(projectsData);
 
   // If data is loaded successfully, proceed to map and render
   // Step 2: Map by each project
   const items = projectsData.map((project, idx) => ({
     key: String(idx + 1),
     // Ensure project.categories exists and is a string, or provide fallback
-    label: project.categories || `Category ${idx + 1}`,
+    label: project.project_categories || `Category ${idx + 1}`,
     children: (
       <div className='p-6'>
         <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 rounded-xl'>
-          <div className='project-card bg-[#BFF747] p-4 flex flex-col justify-between items-start rounded-xl gap-3'>
+          <div className='project-card bg-[#188a82] p-4 flex flex-col justify-between items-start rounded-xl gap-4'>
             {/* Image + Title + Description */}
             <div className='img-content flex flex-col gap-2'>
               {/* console.log(project) is generally not recommended directly inside render method,
                   it will log on every re-render. Do it inside useEffect or a utility function if needed */}
               <img
-                className='w-[200px] object-container rounded-lg'
+                className='w-full h-[240px] object-cover rounded-lg'
                 src={project.project_image || "/images/fallback.jpg"}
                 alt={project.title || "No Image"}
               />
 
-              <h4>{project.project_title || "Untitled Project"}</h4>
-              <span className='line-clamp-2 text-sm leading-6 text-gray-700'>
+              <h4 className='text-white'>{project.project_title || "Untitled Project"}</h4>
+              {/* <span className='line-clamp-2 text-sm leading-6 text-gray-700'>
                 {project.description || "No description available."}
-              </span>
+              </span> */}
             </div>
 
             {/* Technologies + View button */}
@@ -111,9 +112,101 @@ const Tab = () => {
               </div>
               <div>
                 <Link to={`/single-portfolio/${project?.project_title.replace(/\s+/g, '-')}`} state={{ id: project._ID }}> {/* Use _id or ID, provide fallback */}
-                  <button className='project-view bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600'>View</button>
+                  <button className='project-view bg-blue-500 text-white px-3 py-0 rounded hover:bg-blue-600'>View</button>
                 </Link>
               </div>
+            </div>
+          </div>
+        </div>
+
+        {/* osdnvdxzlfv lkv zxcv bnckl n */}
+        <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-2 gap-4 mt-6'>
+          <div className="aximo-project-thumb">
+            <img src="https://img.freepik.com/premium-psd/laptop-mock-up-lateral-view_1310-199.jpg?w=1380" alt="afisd" />
+            <div className="aximo-project-wrap">
+              <div className="aximo-project-data">
+                <Link to="/single-portfolio">
+                  <h3>hdffghfghf</h3>
+                </Link>
+                <p>hdfhdxfhnf rth dfxnfxg fcgn xff nfg x nfg fn ncnc</p>
+              </div>
+              <Link className="aximo-project-icon" to={`/single-portfolio/${project?.project_title.replace(/\s+/g, '-')}`} state={{ id: project._ID }}>
+                <svg width="34" height="28" viewBox="0 0 34 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M19.9795 2C19.9795 2 20.5 8 25.9795 11.2C28.4887 12.6653 31.9795 14 31.9795 14M31.9795 14H2M31.9795 14C31.9795 14 28.5339 15.415 25.9795 16.8C19.9795 20.0533 19.9795 26 19.9795 26"
+                    stroke="#FDFDE1"
+                    strokeWidth="3"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </Link>
+            </div>
+          </div>
+          <div className="aximo-project-thumb">
+            <img src="https://img.freepik.com/premium-psd/laptop-mock-up-lateral-view_1310-199.jpg?w=1380" alt="afisd" />
+            <div className="aximo-project-wrap">
+              <div className="aximo-project-data">
+                <Link to="/single-portfolio">
+                  <h3>hdffghfghf</h3>
+                </Link>
+                <p>hdfhdxfhnf rth dfxnfxg fcgn xff nfg x nfg fn ncnc</p>
+              </div>
+              <Link className="aximo-project-icon">
+                <svg width="34" height="28" viewBox="0 0 34 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M19.9795 2C19.9795 2 20.5 8 25.9795 11.2C28.4887 12.6653 31.9795 14 31.9795 14M31.9795 14H2M31.9795 14C31.9795 14 28.5339 15.415 25.9795 16.8C19.9795 20.0533 19.9795 26 19.9795 26"
+                    stroke="#FDFDE1"
+                    strokeWidth="3"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </Link>
+            </div>
+          </div>
+          <div className="aximo-project-thumb">
+            <img src="https://img.freepik.com/premium-psd/laptop-mock-up-lateral-view_1310-199.jpg?w=1380" alt="afisd" />
+            <div className="aximo-project-wrap">
+              <div className="aximo-project-data">
+                <Link to="/single-portfolio">
+                  <h3>hdffghfghf</h3>
+                </Link>
+                <p>hdfhdxfhnf rth dfxnfxg fcgn xff nfg x nfg fn ncnc</p>
+              </div>
+              <Link className="aximo-project-icon">
+                <svg width="34" height="28" viewBox="0 0 34 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M19.9795 2C19.9795 2 20.5 8 25.9795 11.2C28.4887 12.6653 31.9795 14 31.9795 14M31.9795 14H2M31.9795 14C31.9795 14 28.5339 15.415 25.9795 16.8C19.9795 20.0533 19.9795 26 19.9795 26"
+                    stroke="#FDFDE1"
+                    strokeWidth="3"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </Link>
+            </div>
+          </div>
+          <div className="aximo-project-thumb">
+            <img src="https://img.freepik.com/premium-psd/laptop-mock-up-lateral-view_1310-199.jpg?w=1380" alt="afisd" />
+            <div className="aximo-project-wrap">
+              <div className="aximo-project-data">
+                <Link to="/single-portfolio">
+                  <h3>hdffghfghf</h3>
+                </Link>
+                <p>hdfhdxfhnf rth dfxnfxg fcgn xff nfg x nfg fn ncnc</p>
+              </div>
+              <Link className="aximo-project-icon">
+                <svg width="34" height="28" viewBox="0 0 34 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M19.9795 2C19.9795 2 20.5 8 25.9795 11.2C28.4887 12.6653 31.9795 14 31.9795 14M31.9795 14H2M31.9795 14C31.9795 14 28.5339 15.415 25.9795 16.8C19.9795 20.0533 19.9795 26 19.9795 26"
+                    stroke="#FDFDE1"
+                    strokeWidth="3"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </Link>
             </div>
           </div>
         </div>
@@ -124,12 +217,12 @@ const Tab = () => {
 
   return (
     <div className='project-showcase container py-24'>
-      <Segmented
+      {/* <Segmented
         value={alignValue}
         style={{ marginBottom: 8 }}
         onChange={setAlignValue}
         options={['start', 'center', 'end']}
-      />
+      /> */}
 
       <Tabs
         defaultActiveKey="1"

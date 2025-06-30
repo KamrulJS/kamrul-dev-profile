@@ -26,6 +26,7 @@ function Layout() {
 	return (
 		<>
 			<Preloader />
+			
 			<Outlet />
 			<ScrollToTop />
 			{isLoading && (
