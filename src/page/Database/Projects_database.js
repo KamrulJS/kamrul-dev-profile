@@ -13,7 +13,6 @@ const projectsData = (async () => {
         'Content-Type': 'application/json'
       }
     });
-
     const data = await response.json();
     // console.log("Portfolio data fetched successfully.", data); // Corrected typo: 'projects' to 'data'
     return data; //Resolve the promise with the fetched data
@@ -27,4 +26,5 @@ const projectsData = (async () => {
 
 // Export the Promise.
 // Any module importing this will need to `await` it.
+
 export default projectsData;
